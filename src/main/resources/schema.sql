@@ -7,8 +7,8 @@ URL VARCHAR(255) NOT NULL
 
 INSERT INTO TENANT_CONFIGS(TENANT_ID,URL)
 VALUES
-('test1', 'r2dbc:mysql://root:local@localhost:3306/test1'),
-('test2', 'r2dbc:mysql://root:local@localhost:3306/test2');
+('test1', 'r2dbc:pool:mysql://root:local@localhost:3306/test1'),
+('test2', 'r2dbc:pool:mysql://root:local@localhost:3306/test2');
 
 create database test1;
 create database test2;

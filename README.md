@@ -20,12 +20,7 @@ curl --location --request POST 'http://localhost:8080/customers' \
 }'
 
 
-Issue:
-it will store data in table according to tenant header but request will stuck it need to be fixed.
-if you cancel the request and run a get api it will return result according to tenant passed in header.
-
-
-for now master database properties are hardcoded in the code.
+it will store and return data in tables according to tenant header. 
 
 
 

@@ -5,6 +5,7 @@ import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -23,6 +24,9 @@ import java.util.HashMap;
 @Configuration
 @EnableR2dbcRepositories(basePackages = "com.sense.writeback.tenant.repository", entityOperationsRef = "tenantEntityTemplate")
 public class TenantConfig {
+
+    @Value("${r2dbc.database.url}")
+    private String databaseUrl;
 
     @Autowired
     @Qualifier(value = "masterConnectionFactory")
@@ -44,8 +48,7 @@ public class TenantConfig {
                 .doOnNext(
                         data -> {
                             String  tenantId = data.getTenantId();
-                            String  url = data.getUrl();
-                            tenantConnectionFactoriesMap.putIfAbsent(tenantId, ConnectionFactories.get(url));
+                            tenantConnectionFactoriesMap.putIfAbsent(tenantId, ConnectionFactories.get(databaseUrl+tenantId));
                         }
                 )
                 .blockLast(Duration.ofSeconds(5));
